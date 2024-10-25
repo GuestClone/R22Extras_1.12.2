@@ -1,0 +1,16 @@
+[
+{
+  "modid": "r22extras",
+  "name": "R22 Extras",
+  "description": "Extras for other mods created by RClone22.",
+  "version": "1.0.0.0",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["RClone22"],
+  "credits": "RClone22 this mod creator",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
