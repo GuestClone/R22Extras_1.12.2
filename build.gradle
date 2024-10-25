@@ -127,8 +127,8 @@
     }
 
     mixin {
-        add sourceSets.main, 'mixins.r22hbmmixin.refmap.json'
-        config 'mixins.r22hbmmixin.json'
+        add sourceSets.main, 'mixins.r22extras.refmap.json'
+        config 'mixins.r22extras.json'
 
     }
 
