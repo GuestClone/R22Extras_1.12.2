@@ -28,11 +28,11 @@ public class InitEventsMinecraft implements ICommonProxy
     @SubscribeEvent
     public static void entityTick(LivingEvent.LivingUpdateEvent event) {
         Entity entity = event.getEntity();
-        if (entity instanceof EntityLivingBase) {
-            EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-            SupremeResistanceClass.entityTickMethod(livingEntityBase);
-        }
+
+            EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
+            SupremeResistanceClass.SUP_RES.performEffect(livingEntityBase, 0);
+
 
 
     }
@@ -42,7 +42,7 @@ public class InitEventsMinecraft implements ICommonProxy
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event, SupremeResistanceClass.SUP_RES);
+        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -52,7 +52,7 @@ public class InitEventsMinecraft implements ICommonProxy
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event, SupremeResistanceClass.SUP_RES);
+        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -62,7 +62,7 @@ public class InitEventsMinecraft implements ICommonProxy
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event, SupremeResistanceClass.SUP_RES);
+        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -72,7 +72,7 @@ public class InitEventsMinecraft implements ICommonProxy
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event, SupremeResistanceClass.SUP_RES);
+        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -82,7 +82,7 @@ public class InitEventsMinecraft implements ICommonProxy
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event, SupremeResistanceClass.SUP_RES);
+        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
 
 
     }
@@ -93,7 +93,7 @@ public class InitEventsMinecraft implements ICommonProxy
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event, SupremeResistanceClass.SUP_RES);
+        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
 
     }
 

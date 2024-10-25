@@ -55,9 +55,9 @@ public class SupremeResistanceClass
         if (entity instanceof EntityLivingBase) {
             EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
             PotionEffect effectResistance = (livingEntityBase.getActivePotionEffect(MobEffects.RESISTANCE));
-            if (effectResistance != null && effectResistance.getAmplifier() >= 255) {
+            if (effectResistance != null && (livingEntityBase.isPotionActive(MobEffects.RESISTANCE) && effectResistance.getAmplifier() >= 255)) {
                 // If the entity has level 255 Resistance, give them a new effect
-                livingEntityBase.addPotionEffect(new PotionEffect(SupremeResistanceClass.SUP_RES, 10, 0, false, false));
+                livingEntityBase.addPotionEffect(new PotionEffect(SupremeResistanceClass.SUP_RES, 40, 3, false, false));
             }
         }
     }
@@ -72,11 +72,6 @@ public class SupremeResistanceClass
              livingEntityBase.heal(200.0F);
              livingEntityBase.extinguish();
              livingEntityBase.setAir(300);
-             livingEntityBase.setRevengeTarget(null);
-
-             if (livingEntityBase.getRevengeTarget() != null && !livingEntityBase.getRevengeTarget().isEntityAlive()) {
-                 livingEntityBase.setRevengeTarget(null); // Clears revenge target
-             }
 
              AntiBadPotionMain.abpMainStatic(livingEntityBase);
 
@@ -88,10 +83,10 @@ public class SupremeResistanceClass
       }
     }
 
-    public static void cancelEventSupRes(EntityLivingBase livingEntityBase, Event event, Potion potion)
+    public static void cancelEventSupRes(EntityLivingBase livingEntityBase, Event event)
     {
 
-        if (livingEntityBase.isPotionActive(potion)) {
+        if (livingEntityBase.isPotionActive(SupremeResistanceClass.SUP_RES)) {
             event.setCanceled(true);
         }
 
@@ -109,7 +104,7 @@ public class SupremeResistanceClass
         @Override
         public void performEffect(EntityLivingBase livingEntityBase, int amplifier)
         {
-
+            SupremeResistanceClass.entityTickMethod(livingEntityBase);
         }
 
         @Override
