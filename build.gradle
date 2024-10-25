@@ -166,8 +166,5 @@
                 url "file:///${project.projectDir}/mcmodsrepo"
                 // file:///C:/Users/Admin/AppData/Roaming/InteliiJ%20Projects/R22Extras_1.12.2/mcmodsrepo/
             }
-            maven {
-              url  ""
-            }
         }
     }
