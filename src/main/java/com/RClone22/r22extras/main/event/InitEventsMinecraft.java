@@ -1,6 +1,7 @@
 package com.RClone22.r22extras.main.event;
 
 import com.RClone22.r22extras.api.items.item.IItemIndestruc;
+import com.RClone22.r22extras.api.items.item.ItemNBTString;
 import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
 import com.RClone22.r22extras.main.Constant;
 import com.RClone22.r22extras.main.potion.SupremeResistanceClass;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemEvent;
@@ -24,18 +26,72 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber(modid = Constant.MODID)
 public class InitEventsMinecraft implements ICommonProxy
 {
+
+    public static final String ITEM_INDESTRUC = ItemNBTString.ITEM_INDESTRUC;
     // Living or whatever In-Game Events:
     @SubscribeEvent
     public static void entityTick(LivingEvent.LivingUpdateEvent event) {
         Entity entity = event.getEntity();
 
-
+        if (entity instanceof EntityLivingBase) {
             EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
             SupremeResistanceClass.SUP_RES.performEffect(livingEntityBase, 0);
 
+            boolean inventoryChanged = false; // Track if the inventory was changed
 
+            // Check all items in the player's inventory
+            if (livingEntityBase instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) livingEntityBase;
 
+                // Check main inventory slots
+                for (ItemStack stack : player.inventory.mainInventory) {
+                    inventoryChanged |= checkAndSetIndestructibleTag(stack);
+                }
+
+                // Check armor slots
+                for (ItemStack stack : player.inventory.armorInventory) {
+                    inventoryChanged |= checkAndSetIndestructibleTag(stack);
+                }
+
+                // Check off-hand slot
+                for (ItemStack stack : player.inventory.offHandInventory) {
+                    inventoryChanged |= checkAndSetIndestructibleTag(stack);
+                }
+
+                // If any modifications were made, mark the inventory as dirty
+                if (inventoryChanged) {
+                    player.inventory.markDirty();
+                }
+            }
+        }
     }
+
+
+    private static boolean checkAndSetIndestructibleTag(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return false; // Skip empty slots
+        }
+
+        Item item = stack.getItem();
+
+
+        if (item instanceof IItemIndestruc) {
+            IItemIndestruc itemIndestruc = (IItemIndestruc) item;
+
+
+            if (itemIndestruc.isItemIndestruc(item, stack)) {
+
+                NBTTagCompound tagCompound = stack.getTagCompound();
+                if (tagCompound != null) { // Ensure tagCompound is not null
+                    tagCompound.setBoolean("IndestructibleTag", true);
+                }
+                return true;
+            }
+        }
+
+        return false; // No changes made
+    }
+
     @SubscribeEvent
     public void livingAttack(LivingAttackEvent event)
     {
