@@ -72,6 +72,7 @@ public class SupremeResistanceClass
              livingEntityBase.heal(200.0F);
              livingEntityBase.extinguish();
              livingEntityBase.setAir(300);
+             livingEntityBase.setEntityInvulnerable(true);
 
              AntiBadPotionMain.abpMainStatic(livingEntityBase);
 

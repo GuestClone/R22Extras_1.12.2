@@ -6,11 +6,16 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface IItemIndestruc
 {
-
+     String ITEM_INDESTRUC = ItemNBTString.ITEM_INDESTRUC;
 
 
         default boolean isItemIndestruc(Item item, ItemStack stack)
         {
+            if (stack.hasTagCompound()) {
+                NBTTagCompound tagCompound = stack.getTagCompound();
+                return tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC));
+            }
+
             return false;
         }
 

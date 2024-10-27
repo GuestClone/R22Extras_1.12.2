@@ -12,12 +12,14 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -37,60 +39,13 @@ public class InitEventsMinecraft implements ICommonProxy
             EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
             SupremeResistanceClass.SUP_RES.performEffect(livingEntityBase, 0);
 
-            boolean inventoryChanged = false; // Track if the inventory was changed
 
-            // Check all items in the player's inventory
-            if (livingEntityBase instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) livingEntityBase;
 
-                // Check main inventory slots
-                for (ItemStack stack : player.inventory.mainInventory) {
-                    inventoryChanged |= checkAndSetIndestructibleTag(stack);
-                }
 
-                // Check armor slots
-                for (ItemStack stack : player.inventory.armorInventory) {
-                    inventoryChanged |= checkAndSetIndestructibleTag(stack);
-                }
-
-                // Check off-hand slot
-                for (ItemStack stack : player.inventory.offHandInventory) {
-                    inventoryChanged |= checkAndSetIndestructibleTag(stack);
-                }
-
-                // If any modifications were made, mark the inventory as dirty
-                if (inventoryChanged) {
-                    player.inventory.markDirty();
-                }
-            }
         }
     }
 
 
-    private static boolean checkAndSetIndestructibleTag(ItemStack stack) {
-        if (stack.isEmpty()) {
-            return false; // Skip empty slots
-        }
-
-        Item item = stack.getItem();
-
-
-        if (item instanceof IItemIndestruc) {
-            IItemIndestruc itemIndestruc = (IItemIndestruc) item;
-
-
-            if (itemIndestruc.isItemIndestruc(item, stack)) {
-
-                NBTTagCompound tagCompound = stack.getTagCompound();
-                if (tagCompound != null) { // Ensure tagCompound is not null
-                    tagCompound.setBoolean("IndestructibleTag", true);
-                }
-                return true;
-            }
-        }
-
-        return false; // No changes made
-    }
 
     @SubscribeEvent
     public void livingAttack(LivingAttackEvent event)
@@ -122,6 +77,8 @@ public class InitEventsMinecraft implements ICommonProxy
 
     }
 
+
+
     @SubscribeEvent
     public void livingFall(LivingFallEvent event)
     {
@@ -133,7 +90,7 @@ public class InitEventsMinecraft implements ICommonProxy
     }
 
     @SubscribeEvent
-    public void livingFall(LivingKnockBackEvent event)
+    public void livingKnockback(LivingKnockBackEvent event)
     {
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
@@ -166,18 +123,46 @@ public class InitEventsMinecraft implements ICommonProxy
             if (item instanceof IItemIndestruc) {
                 IItemIndestruc itemIndestruc = (IItemIndestruc) item; // Cast the item to the interface
 
-                // Call the isItemIndestruc method
+
                 if (itemIndestruc.isItemIndestruc(item, stack)) {
-                    // If this returns true, cancel the event
+
                     event.setCanceled(true);
+                    event.getEntity().setEntityInvulnerable(true);
                 }
-                // If it returns false, do nothing, allowing the event to continue
+
             }
-            // If the item does not implement IItemIndestruc, it will also proceed normally
+
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemToss(ItemTossEvent event) {
+        ItemStack tossedItem = event.getEntityItem().getItem();
+        Item item = tossedItem.getItem();
+
+        boolean shouldMakeInvulnerable = false;
+
+        // Check if the ItemStack has the indestructible tag
+        if (tossedItem.hasTagCompound()) {
+            NBTTagCompound tagCompound = tossedItem.getTagCompound();
+            if (tagCompound != null && tagCompound.getBoolean(ITEM_INDESTRUC)) {
+                shouldMakeInvulnerable = true;
+            }
         }
 
+        // Check if the item implements IItemIndestruc and is indestructible
+        if (item instanceof IItemIndestruc) {
+            IItemIndestruc itemIndestruc = (IItemIndestruc) item;
+            if (itemIndestruc.isItemIndestruc(item, tossedItem)) {
+                shouldMakeInvulnerable = true;
+            }
+        }
 
-
+        // Set the item and entity invulnerable if either condition was met
+        if (shouldMakeInvulnerable) {
+            event.getEntityItem().setEntityInvulnerable(true);
+            event.getEntity().setEntityInvulnerable(true);
+        }
     }
 
     @Override
