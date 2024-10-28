@@ -1,5 +1,6 @@
 package com.RClone22.r22extras.main.event.initevents;
 
+import com.RClone22.r22extras.api.event.EventBus;
 import com.RClone22.r22extras.api.items.item.IItemIndestruc;
 import com.RClone22.r22extras.api.items.item.ItemNBTString;
 import com.RClone22.r22extras.main.ConstantExt;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
-@Mod.EventBusSubscriber(modid = ConstantExt.MODID)
+@EventBus.InitBus()
 public class InitItemEvents
 {
     public static final String ITEM_INDESTRUC = ItemNBTString.ITEM_INDESTRUC;

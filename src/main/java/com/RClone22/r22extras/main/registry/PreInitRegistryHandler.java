@@ -1,5 +1,6 @@
 package com.RClone22.r22extras.main.registry;
 
+import com.RClone22.r22extras.api.event.EventBus;
 import com.RClone22.r22extras.main.ConstantExt;
 import com.RClone22.r22extras.main.potion.SupremeResistanceClass;
 import net.minecraft.potion.Potion;
