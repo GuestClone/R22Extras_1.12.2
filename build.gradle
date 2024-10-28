@@ -123,7 +123,7 @@
 
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-        implementation ('org.reflections:reflections:0.9.11')
+        implementation ('org.reflections:reflections:0.10.2')
 
 
     }

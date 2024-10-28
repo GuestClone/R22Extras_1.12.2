@@ -33,10 +33,9 @@ public class R22ExtrasMainMod
 
     private static Logger logger;
 
-    public static final EventBus eventBus = new EventBus();
 
-    public static final PreInitEventRegister PREINIT_EVENTREG = new PreInitEventRegister(eventBus);
-    public static final InitEventRegister INIT_EVENTREG = new InitEventRegister(eventBus);
+    public static final PreInitEventRegister PREINIT_EVENTREG = new PreInitEventRegister(MinecraftForge.EVENT_BUS);
+    public static final InitEventRegister INIT_EVENTREG = new InitEventRegister(MinecraftForge.EVENT_BUS);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
