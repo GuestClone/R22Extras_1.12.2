@@ -1,8 +1,7 @@
 package com.RClone22.r22extras.main;
 
 
-import com.RClone22.r22extras.api.event.InitEventRegister;
-import com.RClone22.r22extras.api.event.PreInitEventRegister;
+import com.RClone22.r22extras.api.event.EventRegister;
 import com.RClone22.r22extras.main.proxy.ICommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -12,7 +11,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
@@ -34,8 +32,8 @@ public class R22ExtrasMainMod
     private static Logger logger;
 
 
-    public static final PreInitEventRegister PREINIT_EVENTREG = new PreInitEventRegister(MinecraftForge.EVENT_BUS);
-    public static final InitEventRegister INIT_EVENTREG = new InitEventRegister(MinecraftForge.EVENT_BUS);
+
+    public static final EventRegister EVENT_REGISTER = new EventRegister(MinecraftForge.EVENT_BUS);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -43,12 +41,10 @@ public class R22ExtrasMainMod
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(event);
 
-        MinecraftForge.EVENT_BUS.register(PREINIT_EVENTREG);
+        MinecraftForge.EVENT_BUS.register(EVENT_REGISTER);
 
 
 
-        MixinBootstrap.init();
-        Mixins.addConfiguration("mixins."+ ConstantExt.MODID+".json");
 
     }
 
@@ -58,7 +54,7 @@ public class R22ExtrasMainMod
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(event);
 
-        MinecraftForge.EVENT_BUS.register(INIT_EVENTREG);
+        MinecraftForge.EVENT_BUS.register(EVENT_REGISTER);
     }
 
     @Mod.EventHandler
@@ -66,6 +62,8 @@ public class R22ExtrasMainMod
     {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(event);
+
+        MinecraftForge.EVENT_BUS.register(EVENT_REGISTER);
 
     }
 

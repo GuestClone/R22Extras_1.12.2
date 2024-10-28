@@ -1,15 +1,16 @@
 package com.RClone22.r22extras.main.event.initevents;
 
-import com.RClone22.r22extras.api.event.EventSubscribe;
 import com.RClone22.r22extras.api.items.item.ItemNBTString;
+import com.RClone22.r22extras.main.ConstantExt;
 import com.RClone22.r22extras.main.potion.SupremeResistanceClass;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
-@EventSubscribe.InitES()
+@Mod.EventBusSubscriber(modid = ConstantExt.MODID)
 public class InitEventsMinecraft
 {
 
