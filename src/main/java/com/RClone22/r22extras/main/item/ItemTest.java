@@ -3,6 +3,7 @@ package com.RClone22.r22extras.main.item;
 import com.RClone22.r22extras.api.items.item.CustomItemTool;
 import com.RClone22.r22extras.api.items.item.IItemIndestruc;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -19,7 +20,7 @@ public class ItemTest extends CustomItemTool implements IItemIndestruc {
     }
 
     @Override
-    public boolean isItemIndestruc(Item item, ItemStack stack)
+    public boolean isItemIndestruc(Item item, ItemStack stack, Entity entity)
     {
         return true;
     }

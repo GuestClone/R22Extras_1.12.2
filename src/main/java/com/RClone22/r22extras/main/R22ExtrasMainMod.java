@@ -1,9 +1,9 @@
 package com.RClone22.r22extras.main;
 
-import com.RClone22.r22extras.main.proxy.ICommonProxy;
-import com.RClone22.r22extras.main.event.InitEventsMinecraft;
 
-import com.RClone22.r22extras.main.registry.PreInitRegistryHandler;
+import com.RClone22.r22extras.api.event.InitEventRegister;
+import com.RClone22.r22extras.api.event.PreInitEventRegister;
+import com.RClone22.r22extras.main.proxy.ICommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -12,41 +12,44 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
 
 @Mod
         (
-        modid = Constant.MODID,
-        name = Constant.MOD_NAME,
-        version = Constant.MOD_VERSION
+        modid = ConstantExt.MODID,
+        name = ConstantExt.MOD_NAME,
+        version = ConstantExt.MOD_VERSION
 )
-@Mod.EventBusSubscriber(modid = Constant.MODID)
 public class R22ExtrasMainMod
 {
-    @Mod.Instance(Constant.MODID)
+    @Mod.Instance(ConstantExt.MODID)
     public static R22ExtrasMainMod instance;
 
-    @SidedProxy(modId = Constant.MODID, clientSide = Constant.ClientProxy, serverSide = Constant.ServerProxy )
+    @SidedProxy(modId = ConstantExt.MODID, clientSide = ConstantExt.ClientProxy, serverSide = ConstantExt.ServerProxy )
     public static ICommonProxy proxy;
-
-
-    public final InitEventsMinecraft initEventsMinecraft = new InitEventsMinecraft(); // Init
-    public final PreInitRegistryHandler preInitRegistryHandler = new PreInitRegistryHandler(); // Pre Init
 
     private static Logger logger;
 
+    public static final EventBus eventBus = new EventBus();
+
+    public static final PreInitEventRegister PREINIT_EVENTREG = new PreInitEventRegister(eventBus);
+    public static final InitEventRegister INIT_EVENTREG = new InitEventRegister(eventBus);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(event);
 
-        MinecraftForge.EVENT_BUS.register(preInitRegistryHandler);
+        MinecraftForge.EVENT_BUS.register(PREINIT_EVENTREG);
+
+
 
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins."+Constant.MODID+".json");
+        Mixins.addConfiguration("mixins."+ ConstantExt.MODID+".json");
 
     }
 
@@ -54,19 +57,18 @@ public class R22ExtrasMainMod
     public void init(FMLInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(event);
 
-        MinecraftForge.EVENT_BUS.register(initEventsMinecraft);
-
+        MinecraftForge.EVENT_BUS.register(INIT_EVENTREG);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(event);
 
     }
-
-
 
 
 

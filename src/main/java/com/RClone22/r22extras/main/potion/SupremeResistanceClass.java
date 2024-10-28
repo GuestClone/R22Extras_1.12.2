@@ -2,8 +2,7 @@ package com.RClone22.r22extras.main.potion;
 
 import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
 import com.RClone22.r22extras.api.potions.CustomPotion;
-import com.RClone22.r22extras.api.potions.CustomPotionEffect;
-import com.RClone22.r22extras.main.Constant;
+import com.RClone22.r22extras.main.ConstantExt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,28 +12,24 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import java.util.Objects;
-
-@Mod.EventBusSubscriber(modid = Constant.MODID)
+@Mod.EventBusSubscriber(modid = ConstantExt.MODID)
 public class SupremeResistanceClass
 {
 
-    private static final ResourceLocation SUP_RES_LOC = new ResourceLocation(Constant.MODID+"/textures/potions/potions.png");
+    private static final ResourceLocation SUP_RES_LOC = new ResourceLocation(ConstantExt.MODID+"/textures/potions/potions.png");
 
     public static String super_res = "sup_res";
 
     private int statusIconIndex = -1;
 
     public static final Potion SUP_RES = new SupremeResistanceClass.PotionSupremeResistance(false, 0xFF0000, 1, 1)
-            .setRegistryName(Constant.MODID, super_res)
+            .setRegistryName(ConstantExt.MODID, super_res)
             .setPotionName("potion."+super_res);
 
     public static void registerPotions(RegistryEvent.Register<Potion> event) {
@@ -94,7 +89,7 @@ public class SupremeResistanceClass
     }
 
 
-    @Mod.EventBusSubscriber(modid = Constant.MODID)
+    @Mod.EventBusSubscriber(modid = ConstantExt.MODID)
     public static class PotionSupremeResistance extends CustomPotion
     {
         public PotionSupremeResistance(boolean isBadEffectIn, int liquidColorIn, int x, int y) {
