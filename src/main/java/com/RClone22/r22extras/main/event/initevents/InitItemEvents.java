@@ -1,11 +1,8 @@
 package com.RClone22.r22extras.main.event.initevents;
 
-import com.RClone22.r22extras.api.event.EventBus;
-import com.RClone22.r22extras.api.event.EventRegister;
+
 import com.RClone22.r22extras.api.items.item.IItemIndestruc;
 import com.RClone22.r22extras.api.items.item.ItemNBTString;
-import com.RClone22.r22extras.main.ConstantExt;
-import com.RClone22.r22extras.main.proxy.ICommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -13,15 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
-@EventBus.InitBus()
-public class InitItemEvents implements ICommonProxy
+public class InitItemEvents
 {
     public static final String ITEM_INDESTRUC = ItemNBTString.ITEM_INDESTRUC;
+
 
     @SubscribeEvent
     public void itemExpireEvent(ItemExpireEvent event)
@@ -47,6 +43,7 @@ public class InitItemEvents implements ICommonProxy
 
         }
     }
+
 
     @SubscribeEvent
     public void onItemToss(ItemTossEvent event) {
@@ -79,10 +76,8 @@ public class InitItemEvents implements ICommonProxy
         }
     }
 
-    @Override
-    public void init(FMLInitializationEvent event)
-    {
-        new EventRegister.InitEventRegister(this);
-    }
+
+
+
 
 }

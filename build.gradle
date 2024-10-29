@@ -123,9 +123,12 @@
 
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-        implementation ('org.reflections:reflections:0.10.2')
-
-
+        implementation 'org.slf4j:slf4j-api:1.7.36' // the latest version
+        implementation 'org.javassist:javassist:3.29.2-GA' //  the latest version
+        implementation 'org.dom4j:dom4j:2.1.4' //  the latest version
+        implementation 'javax.servlet:javax.servlet-api:4.0.1' // "providedCompile" if server provides it
+        implementation 'org.jboss.logging:jboss-logging:3.4.1.Final' // Use the latest version
+        implementation 'org.jboss:jboss-vfs:3.2.15.Final' // Use the latest version
     }
 
     mixin {
