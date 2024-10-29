@@ -1,5 +1,6 @@
 package com.RClone22.r22extras.main.event.initevents;
 
+import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
 import com.RClone22.r22extras.api.items.item.ItemNBTString;
 import com.RClone22.r22extras.main.potion.SupremeResistanceClass;
 import net.minecraft.entity.Entity;
@@ -22,11 +23,9 @@ public class InitEventsMinecraft
             EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
             SupremeResistanceClass.SUP_RES.performEffect(livingEntityBase, 0);
 
-
-
-
+            CustomEntityAttribute.runEffectEntityTick(livingEntityBase);
+            CustomEntityAttribute.addCustomAttribute(livingEntityBase, event);
         }
-
     }
 
     @SubscribeEvent
@@ -36,7 +35,7 @@ public class InitEventsMinecraft
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
         SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
-
+        CustomEntityAttribute.cancelEventSupResAttr(event);
     }
 
     @SubscribeEvent
@@ -46,7 +45,7 @@ public class InitEventsMinecraft
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
         SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
-
+        CustomEntityAttribute.cancelEventSupResAttr(event);
     }
 
     @SubscribeEvent
@@ -56,7 +55,7 @@ public class InitEventsMinecraft
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
         SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
-
+        CustomEntityAttribute.cancelEventSupResAttr(event);
     }
 
 
@@ -68,7 +67,7 @@ public class InitEventsMinecraft
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
         SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
-
+        CustomEntityAttribute.cancelEventSupResAttr(event);
     }
 
     @SubscribeEvent
@@ -78,8 +77,7 @@ public class InitEventsMinecraft
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
         SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
-
-
+        CustomEntityAttribute.cancelEventSupResAttr(event);
     }
 
     @SubscribeEvent
@@ -89,7 +87,7 @@ public class InitEventsMinecraft
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
         SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
-
+        CustomEntityAttribute.cancelEventSupResAttr(event);
     }
 
     // Living or whatever In-Game Events:

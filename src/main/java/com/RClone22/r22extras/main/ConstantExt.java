@@ -23,6 +23,6 @@ public class ConstantExt {
 
     public static final String ClientProxy = "com.RClone22.r22extras.main.proxy.ClientProxy";
 
-    public static final String ServerProxy = "com.RClone22.r22extras.main.proxy.ServerProxy";
+    public static final String ServerProxy = "com.RClone22.r22extras.main.proxy.CommonProxy";
 
 }

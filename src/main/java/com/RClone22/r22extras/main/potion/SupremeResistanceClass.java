@@ -43,21 +43,10 @@ public class SupremeResistanceClass
     public static void entityTickMethod(Entity entity)
     {
         SupremeResistanceClass.runEffectEntityTick(entity);
-        SupremeResistanceClass.giveIfResistance(entity);
 
     }
 
-    public static void giveIfResistance(Entity entity)
-    {
-        if (entity instanceof EntityLivingBase) {
-            EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
-            PotionEffect effectResistance = (livingEntityBase.getActivePotionEffect(MobEffects.RESISTANCE));
-            if (effectResistance != null && (livingEntityBase.isPotionActive(MobEffects.RESISTANCE) && effectResistance.getAmplifier() >= 255)) {
-                // If the entity has level 255 Resistance, give them a new effect
-                livingEntityBase.addPotionEffect(new PotionEffect(SupremeResistanceClass.SUP_RES, 40, 3, false, false));
-            }
-        }
-    }
+
 
     public static void runEffectEntityTick(Entity entity)
     {
