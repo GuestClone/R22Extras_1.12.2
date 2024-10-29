@@ -1,18 +1,21 @@
 package com.RClone22.r22extras.main.event.initevents;
 
 import com.RClone22.r22extras.api.event.EventBus;
+import com.RClone22.r22extras.api.event.EventRegister;
 import com.RClone22.r22extras.api.items.item.ItemNBTString;
 import com.RClone22.r22extras.main.ConstantExt;
 import com.RClone22.r22extras.main.potion.SupremeResistanceClass;
+import com.RClone22.r22extras.main.proxy.ICommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 @EventBus.InitBus()
-public class InitEventsMinecraft
+public class InitEventsMinecraft implements ICommonProxy
 {
 
     public static final String ITEM_INDESTRUC = ItemNBTString.ITEM_INDESTRUC;
@@ -98,5 +101,10 @@ public class InitEventsMinecraft
 
 
 
+    @Override
+    public void init(FMLInitializationEvent event)
+    {
+        new EventRegister.InitEventRegister(this);
+    }
 
 }

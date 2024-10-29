@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 )
 public class R22ExtrasMainMod
 {
-    @Mod.Instance(ConstantExt.MODID)
+    @Mod.Instance(value = ConstantExt.MODID)
     public static R22ExtrasMainMod instance;
 
     @SidedProxy(modId = ConstantExt.MODID, clientSide = ConstantExt.ClientProxy, serverSide = ConstantExt.ServerProxy )
@@ -31,6 +31,7 @@ public class R22ExtrasMainMod
     private static Logger logger;
 
     public static final PreInitRegistryHandler PRE_INIT_REGISTRY_HANDLER =  new PreInitRegistryHandler();
+
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -47,7 +48,7 @@ public class R22ExtrasMainMod
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(event);
 
-        MinecraftForge.EVENT_BUS.register(EventRegister.INIT_EVENT_EVENT_REGISTER);
+        MinecraftForge.EVENT_BUS.register(EventRegister.INIT_EVENT_REGISTER);
     }
 
     @Mod.EventHandler
