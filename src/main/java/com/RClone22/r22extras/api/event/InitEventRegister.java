@@ -1,28 +1,30 @@
 package com.RClone22.r22extras.api.event;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class InitEventRegister
 {
 
-    public InitEventRegister(Object objA, Object objB)
-    {
-        InitEventRegister.registerAB(objA, this);
-        InitEventRegister.registerAB(objB, this);
 
-        InitEventRegister.registerA(objA);
-        InitEventRegister.registerA(this);
+    public InitEventRegister(Object... objA)
+    {
+        for (Object handler : objA) {
+            MinecraftForge.EVENT_BUS.register(handler);
+        }
+        // Additionally, you can use the event object if you need to register it
+        MinecraftForge.EVENT_BUS.register(objA);
+
+        registerHandlers(objA, this);
+
     }
 
-    public static void registerAB(Object objA, Object objB)
-    {
-        MinecraftForge.EVENT_BUS.register(objA);
-        MinecraftForge.EVENT_BUS.register(objB);
-    }
-
-    public static void registerA(Object objA)
-    {
-        MinecraftForge.EVENT_BUS.register(objA);
+    public static void registerHandlers(Object... handlers) {
+        for (Object handler : handlers) {
+            MinecraftForge.EVENT_BUS.register(handler);
+        }
+        // Additionally, you can use the event object if you need to register it
+        MinecraftForge.EVENT_BUS.register(handlers);
     }
 
 }

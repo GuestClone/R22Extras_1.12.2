@@ -1,8 +1,6 @@
 package com.RClone22.r22extras.main;
 
-
-
-
+import com.RClone22.r22extras.api.event.removebadeff.RemoveBadEffHand;
 import com.RClone22.r22extras.main.proxy.CommonProxy;
 import com.RClone22.r22extras.main.registry.InitRegistryHandler;
 import com.RClone22.r22extras.main.registry.PreInitRegistryHandler;
@@ -23,17 +21,17 @@ import java.io.File;
 
 @Mod
         (
-        modid = ConstantExt.MODID,
-        name = ConstantExt.MOD_NAME,
-        version = ConstantExt.MOD_VERSION
+        modid = Constantr22Extras.MODID,
+        name = Constantr22Extras.MOD_NAME,
+        version = Constantr22Extras.MOD_VERSION
 
 )
 public class R22ExtrasMainMod
 {
-    @Mod.Instance(value = ConstantExt.MODID)
+    @Mod.Instance(value = Constantr22Extras.MODID)
     public static R22ExtrasMainMod instance;
 
-    @SidedProxy(modId = ConstantExt.MODID, clientSide = ConstantExt.ClientProxy, serverSide = ConstantExt.ServerProxy )
+    @SidedProxy(modId = Constantr22Extras.MODID, clientSide = Constantr22Extras.ClientProxy, serverSide = Constantr22Extras.ServerProxy )
     public static CommonProxy proxy;
 
     private static Logger logger;
@@ -43,9 +41,11 @@ public class R22ExtrasMainMod
 
     public static final InitRegistryHandler INIT_REGISTRY_HANDLER = new InitRegistryHandler();
 
+
+
     public File modDir;
 
-    public static final Logger log = LogManager.getLogger(ConstantExt.MODID.toUpperCase());
+    public static final Logger log = LogManager.getLogger(Constantr22Extras.MODID.toUpperCase());
     public static final int GUI = 0;
 
     @Mod.EventHandler
@@ -64,8 +64,9 @@ public class R22ExtrasMainMod
 
         registerHandlers(event, this, INIT_REGISTRY_HANDLER);
 
+
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins."+ ConstantExt.MODID+".json");
+        Mixins.addConfiguration("mixins."+ Constantr22Extras.MODID+".json");
         proxy.init(event);
     }
 

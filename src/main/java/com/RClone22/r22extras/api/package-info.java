@@ -1,5 +1,5 @@
-@API(owner = ConstantExt.MODID, apiVersion = ConstantExt.MOD_VERSION, provides = ConstantExt.API_VERSION+"API")
+@API(owner = Constantr22Extras.MODID, apiVersion = Constantr22Extras.MOD_VERSION, provides = Constantr22Extras.API_VERSION+"API")
 package com.RClone22.r22extras.api;
 
-import com.RClone22.r22extras.main.ConstantExt;
+import com.RClone22.r22extras.main.Constantr22Extras;
 import net.minecraftforge.fml.common.API;

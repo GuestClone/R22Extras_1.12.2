@@ -1,6 +1,5 @@
 package com.RClone22.r22extras.main;
 
-import com.RClone22.r22extras.main.proxy.CommonProxy;
 import com.RClone22.r22extras.main.proxy.ICommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +41,7 @@ public class Packets implements ICommonProxy
     @Override
     public void init(FMLInitializationEvent event) {
 
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(ConstantExt.MODID);
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(Constantr22Extras.MODID);
         int packetid=0;
 
 

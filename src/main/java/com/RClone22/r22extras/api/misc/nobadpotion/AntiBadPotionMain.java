@@ -22,7 +22,7 @@ public class AntiBadPotionMain
             // Collect the potions to be removed to avoid concurrent modification issues
             List<Potion> potionsToRemove = entityLivingBase.getActivePotionEffects().stream()
                     .map(PotionEffect::getPotion)
-                    .filter(potion -> badEffectsMC.contains(potion.getRegistryName().toString()) ||
+                    .filter(potion -> badEffectsMC.contains(Objects.requireNonNull(potion.getRegistryName()).toString()) ||
                             badEffectsMod.contains(potion.getRegistryName().toString()))
                     .collect(Collectors.toList());
 
@@ -33,7 +33,7 @@ public class AntiBadPotionMain
 
     }
 
-    public static void abpmMixin(Entity entity)
+    public void abpmMixin(Entity entity)
     {
 
     }
@@ -59,8 +59,9 @@ public class AntiBadPotionMain
     public static void abpMainStatic(Entity entity)
     {
 
+        AntiBadPotionMain antiBadPotionMain = new AntiBadPotionMain();
 
-             abpmMixin(entity);
+        antiBadPotionMain.abpmMixin(entity);
              abpmList(entity);
              abpmIter(entity);
 

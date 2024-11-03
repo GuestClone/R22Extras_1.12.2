@@ -2,6 +2,7 @@ package com.RClone22.r22extras.main.registry;
 
 
 import com.RClone22.r22extras.api.event.InitEventRegister;
+import com.RClone22.r22extras.api.event.removebadeff.RemoveBadEffHand;
 import com.RClone22.r22extras.main.event.initevents.InitEventsMinecraft;
 import com.RClone22.r22extras.main.event.initevents.InitItemEvents;
 import com.RClone22.r22extras.main.proxy.ICommonProxy;
@@ -17,7 +18,8 @@ public class InitRegistryHandler implements ICommonProxy
 
                 initEventsMinecraft,
                 initItemEvents,
-                initEventRegister
+                initEventRegister,
+                REMOVE_BAD_EFF_HAND
         );
 
     }
@@ -27,6 +29,7 @@ public class InitRegistryHandler implements ICommonProxy
 
     public static final InitEventRegister initEventRegister = new InitEventRegister(MinecraftForge.EVENT_BUS, MinecraftForge.EVENT_BUS);
 
+    public static final RemoveBadEffHand REMOVE_BAD_EFF_HAND = new RemoveBadEffHand();
 
     private void registerHandlers(Object... handlers) {
         for (Object handler : handlers) {
