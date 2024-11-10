@@ -1,6 +1,6 @@
 package com.RClone22.r22extras.mixins.mixin;
 
-import com.RClone22.r22extras.api.items.item.ItemNBTString;
+import com.RClone22.r22extras.api.utils.NBTList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +15,7 @@ public abstract class MixinMinecraftItem {
 
 
     @Unique
-    private static final String ITEM_INDESTRUC = ItemNBTString.ITEM_INDESTRUC;
+    private static final String ITEM_INDESTRUC = NBTList.ITEM_INDESTRUC;
 
     /**
      * @author M

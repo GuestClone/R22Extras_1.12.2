@@ -4,6 +4,7 @@ import com.RClone22.r22extras.api.event.removebadeff.RemoveBadEffHand;
 import com.RClone22.r22extras.main.proxy.CommonProxy;
 import com.RClone22.r22extras.main.registry.InitRegistryHandler;
 import com.RClone22.r22extras.main.registry.PreInitRegistryHandler;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -26,6 +27,7 @@ import java.io.File;
         version = Constantr22Extras.MOD_VERSION
 
 )
+@Mod.EventBusSubscriber(modid = Constantr22Extras.MODID)
 public class R22ExtrasMainMod
 {
     @Mod.Instance(value = Constantr22Extras.MODID)
@@ -64,7 +66,6 @@ public class R22ExtrasMainMod
 
         registerHandlers(event, this, INIT_REGISTRY_HANDLER);
 
-
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins."+ Constantr22Extras.MODID+".json");
         proxy.init(event);
@@ -73,6 +74,7 @@ public class R22ExtrasMainMod
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+
         registerHandlers(event, this);
         proxy.postInit(event);
     }

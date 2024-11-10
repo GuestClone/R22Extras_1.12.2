@@ -5,6 +5,7 @@ import com.RClone22.r22extras.api.potions.CustomPotion;
 import com.RClone22.r22extras.api.potions.PotionUtilses;
 import com.RClone22.r22extras.main.Constantr22Extras;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -32,12 +33,13 @@ public class SupremeResistanceClass
             .setRegistryName(Constantr22Extras.MODID, super_res)
             .setPotionName("potion."+super_res);
 
+
     public static void registerPotions(RegistryEvent.Register<Potion> event) {
         IForgeRegistry<Potion> registry = event.getRegistry();
 
         registry.register(SUP_RES);
         ForgeRegistries.POTIONS.register(SUP_RES);
-    }
+    } 
 
 
 
@@ -45,23 +47,30 @@ public class SupremeResistanceClass
 
     public static void runEffectEntityTickInvul(EntityLivingBase livingEntityBase)
     {
+        /*
               livingEntityBase.heal(200.0F);
               livingEntityBase.extinguish();
               livingEntityBase.setAir(300);
               livingEntityBase.setEntityInvulnerable(true);
 
-              AntiBadPotionMain.abpMainStatic(livingEntityBase);
 
               if (!livingEntityBase.world.isRemote && livingEntityBase instanceof EntityPlayer)
               {
                   ((EntityPlayer)livingEntityBase).getFoodStats().addStats(20, 20.0F);
               }
+
+        if (livingEntityBase instanceof EntityPlayer)
+        {
+            ((EntityPlayer)livingEntityBase).getFoodStats().addStats(20, 20.0F);
+        }
+        */
+
       }
 
     public static void runEntityTick(EntityLivingBase livingEntityBase)
     {
 
-        if (livingEntityBase.isPotionActive(SupremeResistanceClass.SUP_RES)) {
+        if (PotionUtilses.hasPotionEffectByRegistryName(livingEntityBase, PotionUtilses.potionSupRes)) {
             // Call your external method
             runEffectEntityTickInvul(livingEntityBase);
         }

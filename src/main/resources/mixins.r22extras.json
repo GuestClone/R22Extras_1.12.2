@@ -4,10 +4,13 @@
   "package": "com.RClone22.r22extras.mixins.mixin",
   "verbose": true,
   "mixins": [
-
+    "MixinMinecraftEntity",
+    "MixinMinecraftEntityItem",
+    "MixinMinecraftEntityLivingBase",
+    "MixinMinecraftEntityPlayer",
+    "MixinMinecraftFoodStats",
     "MixinMinecraftItem",
     "MixinMinecraftItemStack"
-
   ],
   "server": [
   ],

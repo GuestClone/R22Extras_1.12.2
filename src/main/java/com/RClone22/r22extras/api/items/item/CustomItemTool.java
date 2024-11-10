@@ -15,4 +15,5 @@ public class CustomItemTool extends ItemTool
     public CustomItemTool(ToolMaterial materialIn, Set<Block> effectiveBlocksIn) {
         super(materialIn, effectiveBlocksIn);
     }
+
 }
