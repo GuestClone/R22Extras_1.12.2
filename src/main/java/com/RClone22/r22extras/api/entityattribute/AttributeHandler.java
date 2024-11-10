@@ -50,15 +50,18 @@ public class AttributeHandler
 
             AttributeHandler.handlePotionEffect(livingEntityBase);
 
-            IAttributeInstance attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
 
-            if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
+
+            if (AttributeUtil.hasCustomAttributeByRegistryName(livingEntityBase, CustomEntityAttribute.SUP_RES_ATTR)) {
                 // Apply the Luck effect if it's not already active
-                    livingEntityBase.addPotionEffect(new PotionEffect(MobEffects.LUCK, 200, 2, false, false)); // 10 seconds with amplifier 2
+                PotionUtilses.addPotionEffectByRegistryName(livingEntityBase, "minecraft:luck", 20, 2, false, false);
             }
 
         }
 
     }
+
+
+
 
 }

@@ -4,6 +4,8 @@ import com.RClone22.r22extras.main.Constantr22Extras;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class PotionUtilses
 {
@@ -22,6 +24,25 @@ public class PotionUtilses
                 .filter(java.util.Objects::nonNull) // Check for null before converting to a string
                 .map(Object::toString)
                 .anyMatch(potionName -> potionName.equals(potionRegistryName));
+    }
+
+    // Add a potion effect to an entity by its registry name and amplifier
+    public static void addPotionEffectByRegistryName(EntityLivingBase entity, String potionRegistryName, int duration, int amplifier, boolean ambient, boolean particles) {
+        Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionRegistryName));
+
+        if (potion != null) {
+            PotionEffect potionEffect = new PotionEffect(potion, duration, amplifier, ambient, particles);
+            entity.addPotionEffect(potionEffect);
+        }
+    }
+
+    // Remove a potion effect from an entity by its registry name
+    public static void removePotionEffectByRegistryName(EntityLivingBase entity, String potionRegistryName) {
+        Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionRegistryName));
+
+        if (potion != null) {
+            entity.removePotionEffect(potion);
+        }
     }
 
     public static PotionEffect getPotionEffectPETByRegistryName(EntityLivingBase livingEntityBase, String potionRegistryName) {
