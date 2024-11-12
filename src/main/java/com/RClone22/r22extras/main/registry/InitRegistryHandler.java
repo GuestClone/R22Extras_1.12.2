@@ -3,14 +3,11 @@ package com.RClone22.r22extras.main.registry;
 
 import com.RClone22.r22extras.api.entityattribute.AttributeHandler;
 import com.RClone22.r22extras.api.event.InitEventRegister;
-import com.RClone22.r22extras.api.event.cancelburn.CancelBurnEventHand;
-import com.RClone22.r22extras.api.event.cancelburn.CancelBurningEvent;
-import com.RClone22.r22extras.api.event.removebadeff.RemoveBadEffHand;
+
 import com.RClone22.r22extras.main.event.initevents.InitEventsMinecraft;
 import com.RClone22.r22extras.main.event.initevents.InitItemEvents;
 import com.RClone22.r22extras.main.proxy.ICommonProxy;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 public class InitRegistryHandler implements ICommonProxy
 {
@@ -22,9 +19,7 @@ public class InitRegistryHandler implements ICommonProxy
                 initEventsMinecraft,
                 initItemEvents,
                 initEventRegister,
-                attributeHandler,
-                REMOVE_BAD_EFF_HAND,
-                CANCEL_BURN_EVENT_HAND
+                attributeHandler
         );
 
     }
@@ -36,8 +31,6 @@ public class InitRegistryHandler implements ICommonProxy
 
     public static final AttributeHandler attributeHandler = new AttributeHandler();
 
-    public static final CancelBurnEventHand CANCEL_BURN_EVENT_HAND = new CancelBurnEventHand();
-    public static final RemoveBadEffHand REMOVE_BAD_EFF_HAND = new RemoveBadEffHand();
 
     private void registerHandlers(Object... handlers) {
         for (Object handler : handlers) {

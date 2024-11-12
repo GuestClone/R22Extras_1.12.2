@@ -2,6 +2,8 @@ package com.RClone22.r22extras.main.event.initevents;
 
 
 import com.RClone22.r22extras.api.entityattribute.AttributeHandler;
+import com.RClone22.r22extras.api.event.RemoveBadEffectClass;
+import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
 import com.RClone22.r22extras.api.utils.GlobalVar;
 import com.RClone22.r22extras.api.utils.NBTList;
 import com.RClone22.r22extras.main.Constantr22Extras;
@@ -29,6 +31,7 @@ public class InitEventsMinecraft
         if (entity instanceof EntityLivingBase) {
             EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
+            RemoveBadEffectClass.checkAndRemoveBadEffects(livingEntityBase);
 
         }
     }

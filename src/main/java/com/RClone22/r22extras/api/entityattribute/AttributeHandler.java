@@ -1,5 +1,6 @@
 package com.RClone22.r22extras.api.entityattribute;
 
+import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
 import com.RClone22.r22extras.api.potions.PotionUtilses;
 import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.RClone22.r22extras.main.Constantr22Extras;
@@ -84,8 +85,8 @@ public class AttributeHandler
 
 
             if (AttributeUtil.hasCustomAttributeByRegistryName(livingEntityBase, CustomEntityAttribute.SUP_RES_ATTR)) {
-                // Apply the Luck effect if it's not already active
-                PotionUtilses.addPotionEffectByRegistryName(livingEntityBase, "minecraft:luck", 20, 2, false, false);
+                AntiBadPotionMain.abpMainStatic(livingEntityBase);
+                PotionUtilses.addPotionEffectByRegistryName(livingEntityBase, "minecraft:luck", 100, 2, false, false);
             }
 
         }

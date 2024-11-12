@@ -1,6 +1,6 @@
 package com.RClone22.r22extras.main;
 
-import com.RClone22.r22extras.api.event.removebadeff.RemoveBadEffHand;
+
 import com.RClone22.r22extras.main.proxy.CommonProxy;
 import com.RClone22.r22extras.main.registry.InitRegistryHandler;
 import com.RClone22.r22extras.main.registry.PreInitRegistryHandler;

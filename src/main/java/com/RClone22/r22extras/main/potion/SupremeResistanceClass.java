@@ -23,7 +23,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class SupremeResistanceClass
 {
 
-    private static final ResourceLocation SUP_RES_LOC = new ResourceLocation("r22extras/textures/potions/r22extras_potion_supreme_res.png");
+    private static final ResourceLocation SUP_RES_LOC = new ResourceLocation(Constantr22Extras.MODID,"textures/potions/r22extras_potion_supreme_res.png");
 
     public static String super_res = PotionUtilses.super_res;
 
