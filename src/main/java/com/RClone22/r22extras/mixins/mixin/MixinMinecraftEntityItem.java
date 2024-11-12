@@ -1,5 +1,6 @@
 package com.RClone22.r22extras.mixins.mixin;
 
+import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.RClone22.r22extras.api.utils.NBTList;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -14,13 +15,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 
 @Mixin(value = EntityItem.class, remap = false)
-public abstract class MixinMinecraftEntityItem extends Entity
+@Implements(@Interface(iface = EntityInvul.IItemIndestruc.class, prefix = "isItemIndestruc$"))
+public abstract class MixinMinecraftEntityItem extends Entity implements EntityInvul.IItemIndestruc
 {
 
     public MixinMinecraftEntityItem(World worldIn) {
@@ -50,6 +49,23 @@ public abstract class MixinMinecraftEntityItem extends Entity
     @Unique
     private static final String ITEM_INDESTRUC = NBTList.ITEM_INDESTRUC;
 
+
+    @Override
+    public boolean isItemIndestruc(Item item, ItemStack stack)
+    {
+        if (stack.hasTagCompound()) {
+            NBTTagCompound tagCompound = stack.getTagCompound();
+            if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))
+            {
+                EntityInvul.isIndestrucitble = true;
+                return true;
+            }
+        }
+
+        EntityInvul.isIndestrucitble = false;
+        return false;
+    }
+
     /**
      * @author J
      * @reason J
@@ -72,10 +88,7 @@ public abstract class MixinMinecraftEntityItem extends Entity
             return false;
         }
 
-        else if ((tagCompound != null && tagCompound.getBoolean(ITEM_INDESTRUC)) ||
-                (tagCompound != null &&
-                        (source.isExplosion() || source.isExplosion() ||  source.isDamageAbsolute() || source.isMagicDamage())
-                        && tagCompound.getBoolean(ITEM_INDESTRUC))) {
+        else if (EntityInvul.isIndestrucitble || (EntityInvul.isIndestrucitble && (source.isExplosion() || source.isExplosion() ||  source.isDamageAbsolute() || source.isMagicDamage()))) {
             this.r22Extras_1_12_2$setInvulUtil(entityItem);
             return false;
         }
@@ -103,10 +116,27 @@ public abstract class MixinMinecraftEntityItem extends Entity
     {
         EntityItem entityItem = (EntityItem) (Object) this;
 
-        ItemStack itemStack = this.getItem();
+
+        ItemStack itemStack = entityItem.getItem();
+        Item item = itemStack.getItem();
         NBTTagCompound tagCompound = itemStack.getTagCompound();
 
-        if (tagCompound != null && tagCompound.getBoolean(ITEM_INDESTRUC)) {
+        if (entityItem instanceof EntityInvul.IItemIndestruc) {
+            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
+            if (itemIndestruc.isItemIndestruc(item, itemStack)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+            }
+        }
+
+        if (entityItem instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul iEntityInvul = (EntityInvul.IEntityInvul) item;
+            if (iEntityInvul.setEntityInvulnerable(entityItem)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+            }
+        }
+
+        if (EntityInvul.isIndestrucitble)
+        {
             this.r22Extras_1_12_2$setInvulUtil(entityItem);
         }
 
@@ -202,15 +232,15 @@ public abstract class MixinMinecraftEntityItem extends Entity
                 }
             }
 
-            ItemStack item = this.getItem();
+
 
             if (!this.world.isRemote && this.age >= lifespan)
             {
-                int hook = net.minecraftforge.event.ForgeEventFactory.onItemExpire(entityItem, item);
+                int hook = net.minecraftforge.event.ForgeEventFactory.onItemExpire(entityItem, itemStack);
                 if (hook < 0) this.setDead();
                 else          this.lifespan += hook;
             }
-            if (item.isEmpty())
+            if (itemStack.isEmpty())
             {
                 this.setDead();
             }

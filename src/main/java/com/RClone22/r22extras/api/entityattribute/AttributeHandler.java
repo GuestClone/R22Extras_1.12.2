@@ -1,6 +1,7 @@
 package com.RClone22.r22extras.api.entityattribute;
 
 import com.RClone22.r22extras.api.potions.PotionUtilses;
+import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.RClone22.r22extras.main.Constantr22Extras;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,22 +16,32 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AttributeHandler
 {
 
-    public static void handlePotionEffect(EntityLivingBase entity) {
-        if (PotionUtilses.hasPotionEffectByRegistryName(entity, PotionUtilses.potionSupRes)) {
+    public static double potionSupRes = 1.2D;
+
+    public static double potionCrbe = 1.1D;
+
+    public static double inteFace = 1.0D;
+
+
+    public static void handleSupResAttr(Entity entity) {
+        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
+        PotionEffect potionEffectB = PotionUtilses.getPotionEffectPETByRegistryName(livingEntityBase, PotionUtilses.potionSupRes);
+
+        if (potionEffectB != null) {
             // Get or register the custom attribute
-            IAttributeInstance attributeInstance = entity.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+            IAttributeInstance attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
 
             if (attributeInstance == null) {
                 // If the attribute doesn't exist, register it and get the instance
-                entity.getAttributeMap().registerAttribute(CustomEntityAttribute.SUP_RES_ATTR);
-                attributeInstance = entity.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+                livingEntityBase.getAttributeMap().registerAttribute(CustomEntityAttribute.SUP_RES_ATTR);
+                attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
             }
 
             // Set the value of the custom attribute to indicate the presence of the potion effect
-            attributeInstance.setBaseValue(1.0D);  // This could indicate that the potion effect is active
+            attributeInstance.setBaseValue(potionSupRes + potionEffectB.getAmplifier());  // This could indicate that the potion effect is active
         } else {
             // If the potion effect is no longer present, reset the attribute
-            IAttributeInstance attributeInstance = entity.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+            IAttributeInstance attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
 
             // Reset the attribute's value when the potion is not present
             if (attributeInstance != null) {
@@ -38,8 +49,29 @@ public class AttributeHandler
             }
         }
 
+        if (entity instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) entity;
 
+
+            if (customEntity.setEntityInvulnerable(entity)) {
+                IAttributeInstance attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+
+                if (attributeInstance == null) {
+
+                    livingEntityBase.getAttributeMap().registerAttribute(CustomEntityAttribute.SUP_RES_ATTR);
+                    attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+                }
+
+
+                attributeInstance.setBaseValue(inteFace);
+            }
+        }
     }
+
+
+
+
+
 
     @SubscribeEvent
     public static void onEntityLivingUpdate(LivingEvent.LivingUpdateEvent event) {
@@ -48,8 +80,7 @@ public class AttributeHandler
         if (entity instanceof EntityLivingBase) {
             EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-            AttributeHandler.handlePotionEffect(livingEntityBase);
-
+            AttributeHandler.handleSupResAttr(livingEntityBase);
 
 
             if (AttributeUtil.hasCustomAttributeByRegistryName(livingEntityBase, CustomEntityAttribute.SUP_RES_ATTR)) {

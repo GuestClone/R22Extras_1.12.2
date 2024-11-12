@@ -39,7 +39,7 @@ public class InitEventsMinecraft
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
+        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -49,7 +49,7 @@ public class InitEventsMinecraft
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
+        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -59,7 +59,7 @@ public class InitEventsMinecraft
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
+        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -71,7 +71,7 @@ public class InitEventsMinecraft
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
+        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -81,7 +81,7 @@ public class InitEventsMinecraft
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
+        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -91,7 +91,7 @@ public class InitEventsMinecraft
         Entity entity = event.getEntity();
         EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        SupremeResistanceClass.cancelEventSupRes(livingEntityBase, event);
+        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 

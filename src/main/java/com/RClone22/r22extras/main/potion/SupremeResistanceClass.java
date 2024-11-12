@@ -77,14 +77,7 @@ public class SupremeResistanceClass
     }
 
 
-    public static void cancelEventSupRes(EntityLivingBase livingEntityBase, Event event)
-    {
-        boolean hasSupremeResistance = PotionUtilses.hasPotionEffectByRegistryName(livingEntityBase, PotionUtilses.potionSupRes);
-        PotionEffect hasSupremeResistancePET = PotionUtilses.getPotionEffectPETByRegistryName(livingEntityBase, PotionUtilses.potionSupRes);
-        if (hasSupremeResistancePET != null) {
-            event.setCanceled(true);
-        }
-    }
+
 
 
     @Mod.EventBusSubscriber(modid = Constantr22Extras.MODID)
