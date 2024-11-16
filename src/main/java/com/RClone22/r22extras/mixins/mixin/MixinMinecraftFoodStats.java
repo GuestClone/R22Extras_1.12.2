@@ -3,6 +3,7 @@ package com.RClone22.r22extras.mixins.mixin;
 import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
 import com.RClone22.r22extras.api.potions.PotionUtilses;
 
+import com.RClone22.r22extras.api.utils.EntityInvul;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -50,7 +51,7 @@ public abstract class MixinMinecraftFoodStats
 
         IAttributeInstance attributeInstance = player.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
 
-        if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
+        if (EntityInvul.isEntInvunerableT/*attributeInstance != null && attributeInstance.getBaseValue() > 0.0D*/) {
             this.foodSaturationLevel = 20.0F;
             this.foodLevel = 20;
             player.heal(1.0F);

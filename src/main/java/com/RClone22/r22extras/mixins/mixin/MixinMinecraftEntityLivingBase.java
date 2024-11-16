@@ -1,8 +1,10 @@
 package com.RClone22.r22extras.mixins.mixin;
 
 import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
+import com.RClone22.r22extras.api.event.RemoveBadEffectClass;
 import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
 import com.RClone22.r22extras.api.potions.PotionUtilses;
+import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.google.common.base.Objects;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -113,6 +115,9 @@ public abstract class MixinMinecraftEntityLivingBase extends Entity
     @Unique
     EntityLivingBase r22Extras_1_12_2$entityLivingBase = (EntityLivingBase) (Object) this;
 
+
+
+
     /**
      * @author j
      * @reason j
@@ -154,8 +159,12 @@ public abstract class MixinMinecraftEntityLivingBase extends Entity
         if (this.isEntityAlive())
         {
             //
-            if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
+
+            RemoveBadEffectClass.checkAndRemoveBadEffects(r22Extras_1_12_2$entityLivingBase);
+
+            if ( EntityInvul.isEntInvunerableT /*attributeInstance != null && attributeInstance.getBaseValue() > 0.0D*/) {
                 AntiBadPotionMain.abpMainStatic(r22Extras_1_12_2$entityLivingBase);
+
                 this.extinguish();
                 this.setAir(300);
             }

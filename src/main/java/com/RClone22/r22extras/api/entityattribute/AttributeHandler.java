@@ -14,8 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber(modid = Constantr22Extras.MODID)
-public class AttributeHandler
-{
+public class AttributeHandler{
 
     public static double potionSupRes = 1.2D;
 
@@ -53,9 +52,12 @@ public class AttributeHandler
         if (entity instanceof EntityInvul.IEntityInvul) {
             EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) entity;
 
+            IAttributeInstance attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+
+
 
             if (customEntity.setEntityInvulnerable(entity)) {
-                IAttributeInstance attributeInstance = livingEntityBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+
 
                 if (attributeInstance == null) {
 
@@ -67,11 +69,8 @@ public class AttributeHandler
                 attributeInstance.setBaseValue(inteFace);
             }
         }
+
     }
-
-
-
-
 
 
     @SubscribeEvent

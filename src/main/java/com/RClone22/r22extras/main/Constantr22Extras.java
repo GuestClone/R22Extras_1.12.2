@@ -20,6 +20,8 @@ public class Constantr22Extras {
 
     public static final String MOD_OWNER = "RClone22";
 
+    public static final String API_TEXT = "API";
+
 
     public static final String ClientProxy = "com.RClone22.r22extras.main.proxy.ClientProxy";
 

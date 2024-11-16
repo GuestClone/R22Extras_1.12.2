@@ -1,16 +1,26 @@
     buildscript {
+        ext.kotlin_version = '1.2.71'
+
+
         repositories {
             maven { url = 'https://maven.minecraftforge.net/' }
+            maven { url = "https://files.minecraftforge.net/maven" }
             maven { url = 'https://repo.spongepowered.org/maven' }
             mavenCentral()
         }
         dependencies {
             classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
             classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+
         }
     }
 
     apply plugin: 'net.minecraftforge.gradle'
+    apply plugin: 'kotlin'
+
+
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
     apply plugin: 'eclipse'
     apply plugin: 'maven-publish'
@@ -72,10 +82,6 @@
             url = 'https://maven.minecraftforge.net/'
         }
         maven {
-            name = 'CoFH Maven'
-            url = 'https://maven.covers1624.net'
-        }
-        maven {
             name = 'R22Extras_1.12.2'
             url = 'file:///C:/Users/Admin/AppData/Roaming/InteliiJ%20Projects/R22Extras_1.12.2/mcmodsrepo/'
         }
@@ -123,12 +129,9 @@
 
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-        implementation 'org.slf4j:slf4j-api:1.7.36' // the latest version
-        implementation 'org.javassist:javassist:3.29.2-GA' //  the latest version
-        implementation 'org.dom4j:dom4j:2.1.4' //  the latest version
-        implementation 'javax.servlet:javax.servlet-api:4.0.1' // "providedCompile" if server provides it
-        implementation 'org.jboss.logging:jboss-logging:3.4.1.Final' // Use the latest version
-        implementation 'org.jboss:jboss-vfs:3.2.15.Final' // Use the latest version
+
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
     }
 
     mixin {
@@ -173,3 +176,14 @@
             }
         }
     }
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+

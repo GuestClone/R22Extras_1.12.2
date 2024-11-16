@@ -46,5 +46,30 @@
       <option name="name" value="spongepowered-repo" />
       <option name="url" value="https://repo.spongepowered.org/maven" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Progwml6 maven" />
+      <option name="name" value="Progwml6 maven" />
+      <option name="url" value="https://dvs1.progwml6.com/files/maven/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="ModMaven" />
+      <option name="name" value="ModMaven" />
+      <option name="url" value="https://modmaven.k-4u.nl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jared maven" />
+      <option name="name" value="jared maven" />
+      <option name="url" value="http://maven.blamejared.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="galacticraft" />
+      <option name="name" value="galacticraft" />
+      <option name="url" value="https://maven.galacticraft.net/repository/legacy/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="mcmoddev" />
+      <option name="name" value="mcmoddev" />
+      <option name="url" value="https://maven.mcmoddev.com" />
+    </remote-repository>
   </component>
 </project>

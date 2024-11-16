@@ -1,26 +1,21 @@
 package com.RClone22.r22extras.mixins.mixin;
 
 import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
-import com.RClone22.r22extras.api.potions.PotionUtilses;
+import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.RClone22.r22extras.api.utils.GlobalVar;
 import com.RClone22.r22extras.api.utils.NBTList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -170,6 +165,29 @@ public abstract class MixinMinecraftEntity
     private boolean r22Extras_1_12_2$setMakeInvulnerableEntity = GlobalVar.isEntityThingInvunerable;
 
 
+
+    @Unique
+    public void r22Extras_1_12_2$setEntityInvulnerable(Entity entity)
+    {
+
+        if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
+        {
+            EntityInvul.isEntInvunerableT = true;
+        }
+
+        if (entity instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) entity;
+
+            if (customEntity.setEntityInvulnerable(entity)) {
+
+
+                EntityInvul.isEntInvunerableT = true;
+
+            }
+
+        }
+    }
+
     /**
      * @author j
      * @reason j
@@ -178,12 +196,19 @@ public abstract class MixinMinecraftEntity
     public void setEntityInvulnerable(boolean isInvulnerable)
     {
 
+        /*
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             this.invulnerable = true;
             return;
         }
+        */
 
+        if (EntityInvul.isEntInvunerableT)
+        {
+            this.invulnerable = true;
+            return;
+        }
 
         this.invulnerable = isInvulnerable;
 
@@ -197,10 +222,17 @@ public abstract class MixinMinecraftEntity
     public boolean attackEntityFrom(DamageSource source, float amount) {
         if (this.isEntityInvulnerable(source)) {
             return false;
-        } else if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
+        }
+        else if (EntityInvul.isEntInvunerableT)
         {
             return false;
         }
+        /*
+        else if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
+        {
+            return false;
+        }
+        */
         else
         {
             this.markVelocityChanged();
@@ -215,14 +247,22 @@ public abstract class MixinMinecraftEntity
     @Overwrite
     public void extinguish()
     {
+        /*
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             this.fire = 0;
             this.setFire(0);
             return;
         }
+        */
 
 
+        if (EntityInvul.isEntInvunerableT)
+        {
+            this.fire = 0;
+            this.setFire(0);
+            return;
+        }
 
         this.fire = 0;
         this.setFire(0);
@@ -238,7 +278,15 @@ public abstract class MixinMinecraftEntity
 
         Entity entity = (Entity) (Object) this;;;;;
 
+        /*
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
+        {
+            this.r22Extras_1_12_2$NullEmptyVoid();
+            return true;
+        }
+        */
+
+        if (EntityInvul.isEntInvunerableT)
         {
             this.r22Extras_1_12_2$NullEmptyVoid();
             return true;
@@ -257,7 +305,15 @@ public abstract class MixinMinecraftEntity
     {
         Entity entity = (Entity) (Object) this;
 
+        /*
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
+        {
+            this.r22Extras_1_12_2$NullEmptyVoid();
+            return this.isImmuneToFire = true;
+        }
+        */
+
+        if (EntityInvul.isEntInvunerableT)
         {
             this.r22Extras_1_12_2$NullEmptyVoid();
             return this.isImmuneToFire = true;
@@ -286,9 +342,16 @@ public abstract class MixinMinecraftEntity
             this.setFire(0);
         }
 
+        /*
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             this.setFire(0);
+        }
+        */
+
+        if (EntityInvul.isEntInvunerableT)
+        {
+           this.setFire(0);
         }
     }
 
@@ -429,6 +492,7 @@ public abstract class MixinMinecraftEntity
         this.world.profiler.endSection();
 
         this.r22Extras_1_12_2$entityInvul(entity);
+        this.r22Extras_1_12_2$setEntityInvulnerable(entity);
     }
 
 
@@ -437,6 +501,7 @@ public abstract class MixinMinecraftEntity
     {
         NBTTagCompound entityNbtData = new NBTTagCompound();
         entity.writeToNBT(entityNbtData); // Get current NBT data
+
 
         if ((Object) this instanceof EntityItem)
         {
@@ -452,7 +517,20 @@ public abstract class MixinMinecraftEntity
                     this.r22Extras_1_12_2$setMakeInvulnerableEntity = true;
                 } else {
                     this.r22Extras_1_12_2$setMakeInvulnerableEntity = false;
+
                 }
+            }
+        }
+
+        if (entity instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) entity;
+
+
+            if (customEntity.setEntityInvulnerable(entity)) {
+
+                this.r22Extras_1_12_2$setMakeInvulnerableEntity = true;
+
+
             }
         }
 
@@ -462,7 +540,13 @@ public abstract class MixinMinecraftEntity
 
             if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
                 this.r22Extras_1_12_2$setMakeInvulnerableEntity = true;
+
             }
+        }
+
+        if (EntityInvul.isEntInvunerableT)
+        {
+            r22Extras_1_12_2$setInvulUtil(entity);
         }
 
         entity.readFromNBT(entityNbtData);

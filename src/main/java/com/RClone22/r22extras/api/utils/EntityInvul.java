@@ -1,7 +1,10 @@
 package com.RClone22.r22extras.api.utils;
 
+import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
 import com.RClone22.r22extras.main.Constantr22Extras;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
