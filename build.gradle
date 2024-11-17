@@ -126,6 +126,8 @@
 
         annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
+        implementation ('org.ow2.asm:asm:7.1') // Or any compatible version for Java 8
+        implementation ('org.ow2.asm:asm-util:7.1')
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
