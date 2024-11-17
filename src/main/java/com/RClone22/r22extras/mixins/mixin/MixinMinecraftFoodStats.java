@@ -1,9 +1,13 @@
 package com.RClone22.r22extras.mixins.mixin;
 
 import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
+import com.RClone22.r22extras.api.event.RemoveBadEffectClass;
+import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
 import com.RClone22.r22extras.api.potions.PotionUtilses;
 
 import com.RClone22.r22extras.api.utils.EntityInvul;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -13,6 +17,7 @@ import net.minecraft.world.EnumDifficulty;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 
 @Mixin(value = FoodStats.class, remap = false)
@@ -39,6 +44,38 @@ public abstract class MixinMinecraftFoodStats
     public abstract void addExhaustion(float exhaustion);
 
 
+    @Unique
+    private void r22Extras_1_12_2$updateEntSupres(Entity entity)
+    {
+
+        EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+
+        RemoveBadEffectClass.checkAndRemoveBadEffects(entityLivingBase);
+
+        IAttributeInstance attributeInstance = entityLivingBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+
+        if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
+            this.foodSaturationLevel = 20.0F;
+            this.foodLevel = 20;
+            entityLivingBase.heal(1.0F);
+        }
+
+        if (this instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) entityLivingBase;
+
+
+            if (customEntity.setEntityInvulnerable(entityLivingBase)) {
+
+                this.foodSaturationLevel = 20.0F;
+                this.foodLevel = 20;
+                entityLivingBase.heal(1.0F);
+            }
+
+        }
+    }
+
+
+
     /**
      * @author j
      * @reason j
@@ -49,13 +86,7 @@ public abstract class MixinMinecraftFoodStats
         EnumDifficulty enumdifficulty = player.world.getDifficulty();
         this.prevFoodLevel = this.foodLevel;
 
-        IAttributeInstance attributeInstance = player.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
-
-        if (EntityInvul.isEntInvunerableT/*attributeInstance != null && attributeInstance.getBaseValue() > 0.0D*/) {
-            this.foodSaturationLevel = 20.0F;
-            this.foodLevel = 20;
-            player.heal(1.0F);
-        }
+        this.r22Extras_1_12_2$updateEntSupres(player);
 
 
 

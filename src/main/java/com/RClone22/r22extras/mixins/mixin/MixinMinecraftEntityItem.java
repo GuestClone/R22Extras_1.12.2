@@ -18,8 +18,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.*;
 
 @Mixin(value = EntityItem.class, remap = false)
-@Implements(@Interface(iface = EntityInvul.IItemIndestruc.class, prefix = "isItemIndestruc$"))
-public abstract class MixinMinecraftEntityItem extends Entity implements EntityInvul.IItemIndestruc
+public abstract class MixinMinecraftEntityItem extends Entity
 {
 
     public MixinMinecraftEntityItem(World worldIn) {
@@ -50,21 +49,6 @@ public abstract class MixinMinecraftEntityItem extends Entity implements EntityI
     private static final String ITEM_INDESTRUC = NBTList.ITEM_INDESTRUC;
 
 
-    @Override
-    public boolean isItemIndestruc(Item item, ItemStack stack)
-    {
-        if (stack.hasTagCompound()) {
-            NBTTagCompound tagCompound = stack.getTagCompound();
-            if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))
-            {
-                EntityInvul.isIndestrucitble = true;
-                return true;
-            }
-        }
-
-        EntityInvul.isIndestrucitble = false;
-        return false;
-    }
 
     /**
      * @author J
@@ -76,9 +60,11 @@ public abstract class MixinMinecraftEntityItem extends Entity implements EntityI
     {
         EntityItem entityItem = (EntityItem) (Object) this;
         ItemStack itemStack = entityItem.getItem();
+        Item item = itemStack.getItem();
         NBTTagCompound tagCompound = itemStack.getTagCompound();
 
         if (this.world.isRemote || this.isDead) return false; //Forge: Fixes MC-53850
+
         if (this.isEntityInvulnerable(source))
         {
             return false;
@@ -87,13 +73,35 @@ public abstract class MixinMinecraftEntityItem extends Entity implements EntityI
         {
             return false;
         }
-
-        else if (EntityInvul.isIndestrucitble || (EntityInvul.isIndestrucitble && (source.isExplosion() || source.isExplosion() ||  source.isDamageAbsolute() || source.isMagicDamage()))) {
-            this.r22Extras_1_12_2$setInvulUtil(entityItem);
-            return false;
+        else if (item instanceof EntityInvul.IItemIndestruc) {
+            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
+            if (itemIndestruc.isItemIndestruc(itemStack)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+                return false;
+            }
         }
+        else if (entityItem instanceof EntityInvul.IItemIndestruc) {
+            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) entityItem;
+            if (itemIndestruc.isItemIndestruc(itemStack)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+                return false;
+            }
+        }
+        else if (entityItem instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul iEntityInvul = (EntityInvul.IEntityInvul) item;
+            if (iEntityInvul.setEntityInvulnerable(entityItem)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+                return false;
+            }
+        }
+        else if (itemStack.hasTagCompound()) {
+            if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))
+            {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+                return false;
+            }
 
-        else {
+        } else {
             this.markVelocityChanged();
             this.health = (int)((float)this.health - amount);
 
@@ -103,6 +111,51 @@ public abstract class MixinMinecraftEntityItem extends Entity implements EntityI
             }
 
             return false;
+        }
+
+        return false;
+    }
+
+
+
+
+    @Unique
+    private void r22Extras_1_12_2$checkItemIndes(Entity entity)
+    {
+
+        EntityItem entityItem = (EntityItem) (Object) entity;
+
+
+        ItemStack itemStack = entityItem.getItem();
+        Item item = itemStack.getItem();
+        NBTTagCompound tagCompound = itemStack.getTagCompound();
+
+        if (entityItem instanceof EntityInvul.IItemIndestruc) {
+            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) entityItem;
+            if (itemIndestruc.isItemIndestruc(itemStack)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+            }
+        }
+        if (item instanceof EntityInvul.IItemIndestruc) {
+            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
+            if (itemIndestruc.isItemIndestruc(itemStack)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+            }
+        }
+
+        if (entityItem instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul iEntityInvul = (EntityInvul.IEntityInvul) item;
+            if (iEntityInvul.setEntityInvulnerable(entityItem)) {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+            }
+        }
+
+
+        if (itemStack.hasTagCompound()) {
+            if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))
+            {
+                this.r22Extras_1_12_2$setInvulUtil(entityItem);
+            }
         }
     }
 
@@ -121,24 +174,7 @@ public abstract class MixinMinecraftEntityItem extends Entity implements EntityI
         Item item = itemStack.getItem();
         NBTTagCompound tagCompound = itemStack.getTagCompound();
 
-        if (entityItem instanceof EntityInvul.IItemIndestruc) {
-            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            if (itemIndestruc.isItemIndestruc(item, itemStack)) {
-                this.r22Extras_1_12_2$setInvulUtil(entityItem);
-            }
-        }
-
-        if (entityItem instanceof EntityInvul.IEntityInvul) {
-            EntityInvul.IEntityInvul iEntityInvul = (EntityInvul.IEntityInvul) item;
-            if (iEntityInvul.setEntityInvulnerable(entityItem)) {
-                this.r22Extras_1_12_2$setInvulUtil(entityItem);
-            }
-        }
-
-        if (EntityInvul.isIndestrucitble)
-        {
-            this.r22Extras_1_12_2$setInvulUtil(entityItem);
-        }
+       this.r22Extras_1_12_2$checkItemIndes(entityItem);
 
         if (getItem().getItem().onEntityItemUpdate(entityItem)) return;
         if (this.getItem().isEmpty())
@@ -257,6 +293,7 @@ public abstract class MixinMinecraftEntityItem extends Entity implements EntityI
         this.setFire(0);
         this.extinguish();
         this.isImmuneToFire = true;
+        this.setEntityInvulnerable(true);
 
 
         entity.readFromNBT(entityNbtData);

@@ -22,8 +22,10 @@ public class EntityInvul
 
     public interface IItemIndestruc
     {
-        default boolean isItemIndestruc(Item item, ItemStack stack)
+        default boolean isItemIndestruc(ItemStack stack)
         {
+
+
             if (stack.hasTagCompound()) {
                 NBTTagCompound tagCompound = stack.getTagCompound();
                 if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))

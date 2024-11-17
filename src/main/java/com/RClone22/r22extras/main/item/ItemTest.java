@@ -20,7 +20,7 @@ public class ItemTest extends CustomItemTool implements EntityInvul.IItemIndestr
     }
 
     @Override
-    public boolean isItemIndestruc(Item item, ItemStack stack)
+    public boolean isItemIndestruc(ItemStack stack)
     {
         return true;
     }

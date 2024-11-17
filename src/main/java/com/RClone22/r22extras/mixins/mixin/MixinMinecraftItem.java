@@ -10,30 +10,13 @@ import org.spongepowered.asm.mixin.*;
 import java.lang.reflect.Field;
 
 @Mixin(value = Item.class, remap = false)
-@Implements(@Interface(iface = EntityInvul.IItemIndestruc.class, prefix = "isItemIndestruc$"))
-public abstract class MixinMinecraftItem implements EntityInvul.IItemIndestruc{
+public abstract class MixinMinecraftItem
+{
 
 
     @Unique
     private static final String ITEM_INDESTRUC = NBTList.ITEM_INDESTRUC;
 
-
-
-    @Override
-    public boolean isItemIndestruc(Item item, ItemStack stack)
-    {
-        if (stack.hasTagCompound()) {
-            NBTTagCompound tagCompound = stack.getTagCompound();
-            if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))
-            {
-                EntityInvul.isIndestrucitble = true;
-                return true;
-            }
-        }
-
-        EntityInvul.isIndestrucitble = false;
-        return false;
-    }
 
 
     /**
@@ -49,14 +32,19 @@ public abstract class MixinMinecraftItem implements EntityInvul.IItemIndestruc{
             return false;
         }
 
-        if (EntityInvul.isIndestrucitble)
-        {
-            return false;
+        if (stack.hasTagCompound()) {
+
+            NBTTagCompound tagCompound = stack.getTagCompound();
+            if (tagCompound != null && tagCompound.hasKey(ITEM_INDESTRUC)) {
+                if (tagCompound.getBoolean(ITEM_INDESTRUC)) {
+                    return false;
+                }
+            }
         }
 
         if (item instanceof EntityInvul.IItemIndestruc) {
             EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            if (itemIndestruc.isItemIndestruc(item, stack)) {
+            if (itemIndestruc.isItemIndestruc(stack)) {
                 return false;
             }
         }
@@ -65,18 +53,7 @@ public abstract class MixinMinecraftItem implements EntityInvul.IItemIndestruc{
 
 
 
-       /*
-       // Check for NBT tags
-        if (stack.hasTagCompound()) {
 
-            NBTTagCompound tagCompound = stack.getTagCompound();
-            if (tagCompound != null && tagCompound.hasKey(ITEM_INDESTRUC)) {
-                if (tagCompound.getBoolean(ITEM_INDESTRUC)) {
-                    return false; // Indestructible item
-                }
-            }
-        }
-        */
 
         // Return true if the item has taken damage
         return r22Extras_1_12_2$getItemDamage(stack, item) > 0; // Use custom method to get damage
@@ -111,27 +88,19 @@ public abstract class MixinMinecraftItem implements EntityInvul.IItemIndestruc{
     @Unique
     private boolean r22Extras_1_12_2$isItemIndestructible(ItemStack stack, Item item) {
 
-        /*
-
         if (stack != null && !stack.isEmpty()) {
             NBTTagCompound tagCompound = stack.getTagCompound();
             if (tagCompound != null && tagCompound.hasKey(ITEM_INDESTRUC)) {
                 return tagCompound.getBoolean(ITEM_INDESTRUC);
             }
-           }
-            */
 
-        if (EntityInvul.isIndestrucitble)
-        {
-            return true;
+
+            if (item instanceof EntityInvul.IItemIndestruc) {
+                EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
+                return itemIndestruc.isItemIndestruc(stack);
+            }
+
         }
-
-        if (item instanceof EntityInvul.IItemIndestruc) {
-            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            return itemIndestruc.isItemIndestruc(item, stack);
-        }
-
-
         return false; // Not indestructible if conditions are not met
     }
 

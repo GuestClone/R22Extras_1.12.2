@@ -9,27 +9,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.spongepowered.asm.mixin.*;
 
 @Mixin(value = ItemStack.class, remap = false)
-@Implements(@Interface(iface = EntityInvul.IItemIndestruc.class, prefix = "isItemIndestruc$"))
-public abstract class MixinMinecraftItemStack implements EntityInvul.IItemIndestruc{
+
+public abstract class MixinMinecraftItemStack{
 
     @Unique
     private static final String ITEM_INDESTRUC = NBTList.ITEM_INDESTRUC;
 
 
-    @Override
-    public boolean isItemIndestruc(Item item, ItemStack stack)
-    {
-        if (stack.hasTagCompound()) {
-            NBTTagCompound tagCompound = stack.getTagCompound();
-            if (tagCompound != null && (tagCompound.getBoolean(ITEM_INDESTRUC)))
-            {
-                EntityInvul.isIndestrucitble = true;
-                return true;
-            }
-        }
-        EntityInvul.isIndestrucitble = false;
-        return false;
-    }
 
 
     /**
@@ -49,14 +35,10 @@ public abstract class MixinMinecraftItemStack implements EntityInvul.IItemIndest
 
         Item item = thisStack.getItem();
 
-        if (EntityInvul.isIndestrucitble)
-        {
-            return false;
-        }
 
         if (item instanceof EntityInvul.IItemIndestruc) {
             EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            if (itemIndestruc.isItemIndestruc(item, thisStack)) {
+            if (itemIndestruc.isItemIndestruc(thisStack)) {
                 return false;
             }
         }
@@ -69,7 +51,7 @@ public abstract class MixinMinecraftItemStack implements EntityInvul.IItemIndest
         // Check the NBT tag for "Unbreakable" and "Indestructible"
         NBTTagCompound tagCompound = thisStack.getTagCompound();
         return tagCompound == null ||
-                !(tagCompound.getBoolean("Unbreakable") && tagCompound.hasKey("Unbreakable")) /*||
-                !(tagCompound.getBoolean(ITEM_INDESTRUC) && tagCompound.hasKey(ITEM_INDESTRUC))*/;
+                !(tagCompound.getBoolean("Unbreakable") && tagCompound.hasKey("Unbreakable")) ||
+                !(tagCompound.getBoolean(ITEM_INDESTRUC) && tagCompound.hasKey(ITEM_INDESTRUC));
     }
 }

@@ -10,6 +10,7 @@ import com.RClone22.r22extras.main.Constantr22Extras;
 import com.RClone22.r22extras.main.potion.SupremeResistanceClass;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,9 +41,17 @@ public class InitEventsMinecraft
     public void livingAttack(LivingAttackEvent event)
     {
         Entity entity = event.getEntity();
-        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+            CancelEvent.cancelEventSupRes(entityLivingBase, event);
+        }
+        if (entity instanceof EntityItem)
+        {
+            EntityItem entityItem = (EntityItem) entity;
+            CancelEvent.cancelEventItem(entityItem, event);
+        }
 
-        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
     }
 
@@ -50,9 +59,16 @@ public class InitEventsMinecraft
     public void livingDamage(LivingDamageEvent event)
     {
         Entity entity = event.getEntity();
-        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
-
-        CancelEvent.cancelEventSupRes(livingEntityBase, event);
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+            CancelEvent.cancelEventSupRes(entityLivingBase, event);
+        }
+        if (entity instanceof EntityItem)
+        {
+            EntityItem entityItem = (EntityItem) entity;
+            CancelEvent.cancelEventItem(entityItem, event);
+        }
 
     }
 
@@ -60,10 +76,18 @@ public class InitEventsMinecraft
     public void livingDeath(LivingDeathEvent event)
     {
         Entity entity = event.getEntity();
-        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
 
-        CancelEvent.cancelEventSupRes(livingEntityBase, event);
 
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+            CancelEvent.cancelEventSupRes(entityLivingBase, event);
+        }
+        if (entity instanceof EntityItem)
+        {
+            EntityItem entityItem = (EntityItem) entity;
+            CancelEvent.cancelEventItem(entityItem, event);
+        }
     }
 
 
@@ -72,9 +96,16 @@ public class InitEventsMinecraft
     public void livingFall(LivingFallEvent event)
     {
         Entity entity = event.getEntity();
-        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
-
-        CancelEvent.cancelEventSupRes(livingEntityBase, event);
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+            CancelEvent.cancelEventSupRes(entityLivingBase, event);
+        }
+        if (entity instanceof EntityItem)
+        {
+            EntityItem entityItem = (EntityItem) entity;
+            CancelEvent.cancelEventItem(entityItem, event);
+        }
 
     }
 
@@ -82,9 +113,16 @@ public class InitEventsMinecraft
     public void livingKnockback(LivingKnockBackEvent event)
     {
         Entity entity = event.getEntity();
-        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
-
-        CancelEvent.cancelEventSupRes(livingEntityBase, event);
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+            CancelEvent.cancelEventSupRes(entityLivingBase, event);
+        }
+        if (entity instanceof EntityItem)
+        {
+            EntityItem entityItem = (EntityItem) entity;
+            CancelEvent.cancelEventItem(entityItem, event);
+        }
 
     }
 
@@ -92,9 +130,16 @@ public class InitEventsMinecraft
     public void livingHurt(LivingHurtEvent event)
     {
         Entity entity = event.getEntity();
-        EntityLivingBase livingEntityBase = (EntityLivingBase) entity;
-
-        CancelEvent.cancelEventSupRes(livingEntityBase, event);
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+            CancelEvent.cancelEventSupRes(entityLivingBase, event);
+        }
+        if (entity instanceof EntityItem)
+        {
+            EntityItem entityItem = (EntityItem) entity;
+            CancelEvent.cancelEventItem(entityItem, event);
+        }
 
     }
 

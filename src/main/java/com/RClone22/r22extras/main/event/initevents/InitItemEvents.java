@@ -57,7 +57,7 @@ public class InitItemEvents
         // Check if the item implements IItemIndestruc and is indestructible
         if (item instanceof EntityInvul.IItemIndestruc) {
             EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            if (itemIndestruc.isItemIndestruc(item, tossedItem)) {
+            if (itemIndestruc.isItemIndestruc(tossedItem)) {
                 isItemInvunerable = true;
             }
         }

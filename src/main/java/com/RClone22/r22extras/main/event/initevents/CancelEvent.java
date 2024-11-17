@@ -3,6 +3,7 @@ package com.RClone22.r22extras.main.event.initevents;
 import com.RClone22.r22extras.api.entityattribute.AttributeUtil;
 import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
 import com.RClone22.r22extras.api.potions.PotionUtilses;
+import com.RClone22.r22extras.api.utils.CheckNbt;
 import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.RClone22.r22extras.api.utils.NBTList;
 import net.minecraft.entity.Entity;
@@ -47,33 +48,26 @@ public class CancelEvent
 
 
 
-
-
         if (stack.hasTagCompound()) {
             NBTTagCompound tagCompound = stack.getTagCompound();
             if (tagCompound != null && tagCompound.getBoolean(ITEM_INDESTRUC)) {
-                isItemInvunerable = true;
+                event.setCanceled(true);
             }
         }
 
 
         if (item instanceof EntityInvul.IItemIndestruc) {
             EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            if (itemIndestruc.isItemIndestruc(item, stack)) {
-                 isItemInvunerable = true;
+            if (itemIndestruc.isItemIndestruc(stack)) {
+                event.setCanceled(true);
             }
         }
 
         if (entityItem instanceof EntityInvul.IItemIndestruc) {
-            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) item;
-            if (itemIndestruc.isItemIndestruc(item, stack)) {
-                isItemInvunerable = true;
+            EntityInvul.IItemIndestruc itemIndestruc = (EntityInvul.IItemIndestruc) entityItem;
+            if (itemIndestruc.isItemIndestruc(stack)) {
+                event.setCanceled(true);
             }
-        }
-
-
-        if (isItemInvunerable) {
-            event.setCanceled(true);
         }
 
     }

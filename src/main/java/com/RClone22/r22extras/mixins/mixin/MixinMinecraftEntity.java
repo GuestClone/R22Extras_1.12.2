@@ -165,54 +165,11 @@ public abstract class MixinMinecraftEntity
     private boolean r22Extras_1_12_2$setMakeInvulnerableEntity = GlobalVar.isEntityThingInvunerable;
 
 
-
-    @Unique
-    public void r22Extras_1_12_2$setEntityInvulnerable(Entity entity)
-    {
-
-        if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
-        {
-            EntityInvul.isEntInvunerableT = true;
-        }
-
-        if (entity instanceof EntityInvul.IEntityInvul) {
-            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) entity;
-
-            if (customEntity.setEntityInvulnerable(entity)) {
+    @Shadow
+    public abstract void setEntityInvulnerable(boolean isInvulnerable);
 
 
-                EntityInvul.isEntInvunerableT = true;
-
-            }
-
-        }
-    }
-
-    /**
-     * @author j
-     * @reason j
-     */
-    @Overwrite
-    public void setEntityInvulnerable(boolean isInvulnerable)
-    {
-
-        /*
-        if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
-        {
-            this.invulnerable = true;
-            return;
-        }
-        */
-
-        if (EntityInvul.isEntInvunerableT)
-        {
-            this.invulnerable = true;
-            return;
-        }
-
-        this.invulnerable = isInvulnerable;
-
-    }
+    @Shadow public boolean isDead;
 
     /**
      * @author J
@@ -223,16 +180,10 @@ public abstract class MixinMinecraftEntity
         if (this.isEntityInvulnerable(source)) {
             return false;
         }
-        else if (EntityInvul.isEntInvunerableT)
-        {
-            return false;
-        }
-        /*
         else if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             return false;
         }
-        */
         else
         {
             this.markVelocityChanged();
@@ -247,23 +198,6 @@ public abstract class MixinMinecraftEntity
     @Overwrite
     public void extinguish()
     {
-        /*
-        if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
-        {
-            this.fire = 0;
-            this.setFire(0);
-            return;
-        }
-        */
-
-
-        if (EntityInvul.isEntInvunerableT)
-        {
-            this.fire = 0;
-            this.setFire(0);
-            return;
-        }
-
         this.fire = 0;
         this.setFire(0);
     }
@@ -278,20 +212,18 @@ public abstract class MixinMinecraftEntity
 
         Entity entity = (Entity) (Object) this;;;;;
 
-        /*
+
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             this.r22Extras_1_12_2$NullEmptyVoid();
             return true;
         }
-        */
 
-        if (EntityInvul.isEntInvunerableT)
+        if (this.invulnerable)
         {
             this.r22Extras_1_12_2$NullEmptyVoid();
             return true;
         }
-
 
         return false;
     }
@@ -312,13 +244,11 @@ public abstract class MixinMinecraftEntity
             return this.isImmuneToFire = true;
         }
         */
-
-        if (EntityInvul.isEntInvunerableT)
+        if (this.invulnerable)
         {
             this.r22Extras_1_12_2$NullEmptyVoid();
             return this.isImmuneToFire = true;
         }
-
 
         return this.isImmuneToFire;
     }
@@ -342,17 +272,17 @@ public abstract class MixinMinecraftEntity
             this.setFire(0);
         }
 
+        if (this.invulnerable)
+        {
+            this.setFire(0);
+        }
+
         /*
         if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             this.setFire(0);
         }
         */
-
-        if (EntityInvul.isEntInvunerableT)
-        {
-           this.setFire(0);
-        }
     }
 
 
@@ -492,7 +422,6 @@ public abstract class MixinMinecraftEntity
         this.world.profiler.endSection();
 
         this.r22Extras_1_12_2$entityInvul(entity);
-        this.r22Extras_1_12_2$setEntityInvulnerable(entity);
     }
 
 
@@ -516,6 +445,7 @@ public abstract class MixinMinecraftEntity
                     this.r22Extras_1_12_2$setInvulUtil(entityItem);
                     this.r22Extras_1_12_2$setMakeInvulnerableEntity = true;
                 } else {
+                    this.r22Extras_1_12_2$NullEmptyVoid();
                     this.r22Extras_1_12_2$setMakeInvulnerableEntity = false;
 
                 }
@@ -527,10 +457,12 @@ public abstract class MixinMinecraftEntity
 
 
             if (customEntity.setEntityInvulnerable(entity)) {
-
+                this.r22Extras_1_12_2$setInvulUtil(entity);
                 this.r22Extras_1_12_2$setMakeInvulnerableEntity = true;
-
-
+            }
+            else {
+                this.r22Extras_1_12_2$NullEmptyVoid();
+                this.r22Extras_1_12_2$setMakeInvulnerableEntity = false;
             }
         }
 
@@ -539,12 +471,19 @@ public abstract class MixinMinecraftEntity
             IAttributeInstance attributeInstance = entityLivingBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
 
             if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
+
+                this.r22Extras_1_12_2$setInvulUtil(entity);
                 this.r22Extras_1_12_2$setMakeInvulnerableEntity = true;
 
             }
+
+            else {
+                this.r22Extras_1_12_2$NullEmptyVoid();
+                this.r22Extras_1_12_2$setMakeInvulnerableEntity = false;
+            }
         }
 
-        if (EntityInvul.isEntInvunerableT)
+        if (this.r22Extras_1_12_2$setMakeInvulnerableEntity)
         {
             r22Extras_1_12_2$setInvulUtil(entity);
         }
@@ -568,6 +507,8 @@ public abstract class MixinMinecraftEntity
             this.extinguish();
             this.invulnerable = true;
             this.isImmuneToFire = true;
+            this.setEntityInvulnerable(true);
+            this.isDead = false;
 
 
 

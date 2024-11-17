@@ -3,7 +3,6 @@ package com.RClone22.r22extras.mixins.mixin;
 import com.RClone22.r22extras.api.entityattribute.CustomEntityAttribute;
 import com.RClone22.r22extras.api.event.RemoveBadEffectClass;
 import com.RClone22.r22extras.api.misc.nobadpotion.AntiBadPotionMain;
-import com.RClone22.r22extras.api.potions.PotionUtilses;
 import com.RClone22.r22extras.api.utils.EntityInvul;
 import com.google.common.base.Objects;
 import net.minecraft.block.material.Material;
@@ -14,7 +13,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -136,7 +134,46 @@ public abstract class MixinMinecraftEntityLivingBase extends Entity
 
         }
 
+
+        if (this instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) this;
+
+
+            if (customEntity.setEntityInvulnerable(this)) {
+                this.setAir(300);
+                return true;
+            }
+
+        }
+
         return false;
+    }
+
+
+    @Unique
+    private void r22Extras_1_12_2$updateEntSupres()
+    {
+        RemoveBadEffectClass.checkAndRemoveBadEffects(r22Extras_1_12_2$entityLivingBase);
+
+        IAttributeInstance attributeInstance = r22Extras_1_12_2$entityLivingBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
+
+        if (attributeInstance != null && attributeInstance.getBaseValue() > 0.0D) {
+            AntiBadPotionMain.abpMainStatic(r22Extras_1_12_2$entityLivingBase);
+
+            this.extinguish();
+            this.setAir(300);
+        }
+
+        if (this instanceof EntityInvul.IEntityInvul) {
+            EntityInvul.IEntityInvul customEntity = (EntityInvul.IEntityInvul) this;
+
+
+            if (customEntity.setEntityInvulnerable(this)) {
+                this.extinguish();
+                this.setAir(300);
+            }
+
+        }
     }
 
     /**
@@ -154,20 +191,14 @@ public abstract class MixinMinecraftEntityLivingBase extends Entity
         boolean flag = r22Extras_1_12_2$entityLivingBase instanceof EntityPlayer;
         IAttributeInstance attributeInstance = r22Extras_1_12_2$entityLivingBase.getAttributeMap().getAttributeInstance(CustomEntityAttribute.SUP_RES_ATTR);
 
-
+        this.r22Extras_1_12_2$updateEntSupres();
 
         if (this.isEntityAlive())
         {
             //
 
-            RemoveBadEffectClass.checkAndRemoveBadEffects(r22Extras_1_12_2$entityLivingBase);
+            this.r22Extras_1_12_2$updateEntSupres();
 
-            if ( EntityInvul.isEntInvunerableT /*attributeInstance != null && attributeInstance.getBaseValue() > 0.0D*/) {
-                AntiBadPotionMain.abpMainStatic(r22Extras_1_12_2$entityLivingBase);
-
-                this.extinguish();
-                this.setAir(300);
-            }
             //
             if (this.isEntityInsideOpaqueBlock())
             {
