@@ -64,6 +64,7 @@ buildscript {
 
                 // Recommended logging level for the console
                 property 'forge.logging.console.level', 'debug'
+
                 arg '-torg.spongepowered.asm.launch.MixinTweaker'
                 args '--tweakClass', 'org.spongepowered.asm.launch.MixinTweaker'
                 property 'mixins.env.remapRefMap', 'true'
@@ -78,6 +79,7 @@ buildscript {
                 args '--tweakClass', 'org.spongepowered.asm.launch.MixinTweaker'
                 // Recommended logging level for the console
                 property 'forge.logging.console.level', 'debug'
+
                 arg '-torg.spongepowered.asm.launch.MixinTweaker'
 
             }
