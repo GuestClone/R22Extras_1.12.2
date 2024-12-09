@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/R22Extras_1.12.2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/R22Extras_1.12.2.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/R22Extras_1.12.2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/R22Extras_1.12.2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rclone22.modsrc22.R22Extras_1.12.2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/rclone22.modsrc22.R22Extras_1.12.2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rclone22.modsrc22.R22Extras_1.12.2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/rclone22.modsrc22.R22Extras_1.12.2.test.iml" />
     </modules>
   </component>
 </project>

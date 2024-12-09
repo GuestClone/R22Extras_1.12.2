@@ -71,5 +71,30 @@
       <option name="name" value="mcmoddev" />
       <option name="url" value="https://maven.mcmoddev.com" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven3" />
+      <option name="name" value="maven3" />
+      <option name="url" value="file:/$PROJECT_DIR$/../../InteliiJ%20Projects/rclone22utils/mcmodsrepo/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="file:/$USER_HOME$/AppData/Roaming/InteliiJ%20Projects/R22Extras_1.12.2/mcmodsrepo" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven3" />
+      <option name="name" value="maven3" />
+      <option name="url" value="file:/$USER_HOME$/AppData/Roaming/InteliiJ%20Projects/rclone22utils/mcmodsrepo" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="BintrayJCenter" />
+      <option name="name" value="BintrayJCenter" />
+      <option name="url" value="https://jcenter.bintray.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="lxgaming" />
+      <option name="name" value="lxgaming" />
+      <option name="url" value="https://dl.bintray.com/lxgaming/maven" />
+    </remote-repository>
   </component>
 </project>

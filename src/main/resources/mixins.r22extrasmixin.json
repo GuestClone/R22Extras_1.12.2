@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "rclone22.modsrc22.r22extrasmixin.mixins.mixin",
+  "verbose": true,
+  "mixins": [
+
+  ],
+  "server": [
+  ],
+  "client": [
+  ],
+  "setSourceFile": true,
+  "minVersion": "0.8",
+  "target": "@env(DEFAULT)",
+  "refmap": "mixins.r22extrasmixin.refmap.json",
+  "overwrites": {
+    "conformVisibility": true,
+    "requireAnnotations": true
+  },
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
